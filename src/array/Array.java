@@ -1,15 +1,16 @@
 package array;
 
-public class Array {
-    private int[] data;
+public class Array<E> {
+    private E[] data;
     private int size;
 
     public Array() {
         this(10);
     }
 
+    @SuppressWarnings("unchecked")
     public Array(int capacity) {
-        data = new int[capacity];
+        data = (E[]) new Object[capacity];
         size = 0;
     }
 
@@ -25,15 +26,15 @@ public class Array {
         return size == 0;
     }
 
-    public void addLast(int e) {
+    public void addLast(E e) {
         add(size, e);
     }
 
-    public void addFirst(int e) {
+    public void addFirst(E e) {
         add(0, e);
     }
 
-    public void add(int index, int e) {
+    public void add(int index, E e) {
         if (size == data.length) {
             throw new IllegalArgumentException("Add failed. Array is full.");
         }
@@ -60,57 +61,57 @@ public class Array {
         return result.toString();
     }
 
-    public int get(int index) {
+    public E get(int index) {
         if (index < 0 || index >= size) {
             throw new IllegalArgumentException("Get failed. Index is illegal.");
         }
         return data[index];
     }
 
-    public void set(int index, int e) {
+    public void set(int index, E e) {
         if (index < 0 || index >= size) {
             throw new IllegalArgumentException("Set failed. Index is illegal.");
         }
         data[index] = e;
     }
 
-    public boolean contains(int e) {
+    public boolean contains(E e) {
         for (int i = 0; i < size; i++) {
-            if (data[i] == e) {
+            if (data[i].equals(e)) {
                 return true;
             }
         }
         return false;
     }
 
-    public int find(int e) {
+    public int find(E e) {
         for (int i = 0; i < size; i++) {
-            if (data[i] == e) {
+            if (data[i].equals(e)) {
                 return i;
             }
         }
         return -1;
     }
 
-    public int remove(int index) {
+    public E remove(int index) {
         if (index < 0 || index >= size) {
             throw new IllegalArgumentException("Remove failed. Index is illegal.");
         }
-        int ret = data[index];
+        E ret = data[index];
         System.arraycopy(data, index + 1, data, index, size - index - 1);
         size--;
         return ret;
     }
 
-    public int removeFirst() {
+    public E removeFirst() {
         return remove(0);
     }
 
-    public int removeLast() {
+    public E removeLast() {
         return remove(size - 1);
     }
 
-    public void removeElement(int e) {
+    public void removeElement(E e) {
         int index = find(e);
         if (index != -1) {
             remove(index);
@@ -118,7 +119,7 @@ public class Array {
     }
 
     public static void main(String[] args) {
-        Array array = new Array(20);
+        Array<Integer> array = new Array<>(20);
         for (int i = 0; i < 10; i++) {
             array.addLast(i);
         }
