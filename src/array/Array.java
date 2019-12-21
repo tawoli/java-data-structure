@@ -35,30 +35,22 @@ public class Array<E> {
     }
 
     public void add(int index, E e) {
-        if (size == data.length) {
-            throw new IllegalArgumentException("Add failed. Array is full.");
-        }
         if (index < 0 || index > size) {
             throw new IllegalArgumentException("Add failed. Require index >= 0 and index <= size.");
+        }
+        if (size == data.length) {
+            resize(2 * data.length);
         }
         System.arraycopy(data, index, data, index + 1, size - index);
         data[index] = e;
         size++;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder result = new StringBuilder();
-        result.append(String.format("Array: size = %d , capacity = %d\n", size, data.length));
-        result.append('[');
-        for (int i = 0; i < size; i++) {
-            result.append(data[i]);
-            if (i != size - 1) {
-                result.append(", ");
-            }
-        }
-        result.append(']');
-        return result.toString();
+    @SuppressWarnings("unchecked")
+    private void resize(int newCapacity) {
+        E[] newData = (E[]) new Object[newCapacity];
+        if (size >= 0) System.arraycopy(data, 0, newData, 0, size);
+        data = newData;
     }
 
     public E get(int index) {
@@ -100,6 +92,9 @@ public class Array<E> {
         E ret = data[index];
         System.arraycopy(data, index + 1, data, index, size - index - 1);
         size--;
+        if (size == data.length / 4 && data.length / 2 != 0) {
+            resize(data.length / 2);
+        }
         return ret;
     }
 
@@ -116,6 +111,21 @@ public class Array<E> {
         if (index != -1) {
             remove(index);
         }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        result.append(String.format("Array: size = %d , capacity = %d\n", size, data.length));
+        result.append('[');
+        for (int i = 0; i < size; i++) {
+            result.append(data[i]);
+            if (i != size - 1) {
+                result.append(", ");
+            }
+        }
+        result.append(']');
+        return result.toString();
     }
 
     public static void main(String[] args) {
