@@ -1,4 +1,4 @@
-package bst;
+package tree.bst;
 
 import java.util.LinkedList;
 import java.util.Queue;

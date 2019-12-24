@@ -1,6 +1,6 @@
 package set;
 
-import bst.BST;
+import tree.bst.BST;
 
 public class BSTSet<E extends Comparable<E>> implements Set<E> {
     private BST<E> bst;

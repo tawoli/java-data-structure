@@ -1,4 +1,4 @@
-package heap;
+package tree.heap;
 
 import array.Array;
 
@@ -59,7 +59,7 @@ public class MaxHeap<E extends Comparable<E>> {
 
     public E findMax() {
         if (data.getSize() == 0) {
-            throw new IllegalArgumentException("Can not findMax when heap is empty.");
+            throw new IllegalArgumentException("Can not findMax when tree.heap is empty.");
         }
         return data.get(0);
     }
